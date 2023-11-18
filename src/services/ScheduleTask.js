@@ -12,8 +12,17 @@ export default class ScheduleTaskService {
     await this.task();
     this.job.cancel();
   }
-  
+
   static getAllScheduledTasks() {
-    return schedule.scheduledJobs;
+    const scheduledJobs = schedule.scheduledJobs;
+    const scheduledJobDetails = {};
+
+    Object.keys(scheduledJobs).forEach((jobName) => {
+      scheduledJobDetails[jobName] = {
+        nextInvocation: scheduledJobs[jobName].nextInvocation(),
+      };
+    });
+
+    return scheduledJobDetails;
   }
 }
