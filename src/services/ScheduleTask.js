@@ -12,4 +12,8 @@ export default class ScheduleTaskService {
     await this.task();
     this.job.cancel();
   }
+  
+  static getAllScheduledTasks() {
+    return schedule.scheduledJobs;
+  }
 }

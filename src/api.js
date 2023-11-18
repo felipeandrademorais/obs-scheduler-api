@@ -13,9 +13,26 @@ const obsConnectionService = new OBSConnectionService(
   process.env.OBS_PASSWORD
 );
 
-app.get("/", (res) => {
-  console.log(res);
-  return res.status(200).json({ message: `Api running.` });
+app.get("/", (req, res) => {
+  return res.json({ message: `Api running.` });
+});
+
+app.get("/scenes", async (req, res, next) => {
+  try {
+    const scenes = await obsConnectionService.getSceneList();
+    return res.json({ scenes });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.get("/schedules", async (req, res, next) => {
+  try {
+    const schedules = ScheduleTaskService.getAllScheduledTasks();
+    return res.json({ schedules });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.post("/start", (req, res) => {
