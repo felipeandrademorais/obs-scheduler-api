@@ -1,11 +1,13 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors"
 import OBSConnectionService from "./services/OBSConnection.js";
 import ScheduleTaskService from "./services/ScheduleTask.js";
 
 dotenv.config();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const obsConnectionService = new OBSConnectionService(
